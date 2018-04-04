@@ -12,72 +12,82 @@
 ***/
 
 SELECT 
-       mult.CD_CGC AS "CNPJ OSS"
-       , mult.ds_razao_social AS "Razao Social OSS"
-       , 'ISG' AS "Nome Fantasia"
-       , mult.nr_cnes AS "CNES"
-       , mult.ds_multi_empresa AS "Razao Social da Unidade"
-       , 'HDT' AS "Nome fantasia da Unidade"
-       , atendime.cd_atendimento AS "Codigo da Internacao"
-       , paciente.cd_paciente AS "Código da ficha do paciente"
-       , paciente.nr_cns AS "CNS Paciente"
-       , TO_CHAR(paciente.dt_nascimento, 'YYYY-MM-DD') AS "Data de nascimento"
-       , DECODE(paciente.tp_sexo, 'M', 1, 'F', 2, '0') AS "Sexo"
-       -- C CASADO, S SOLTEIRO, D DESQUITADO, G IGNORADO, I DIVORCIADO, U UNIAO ESTAVEL, V VIUVO
-       , DECODE(paciente.tp_estado_civil, 'C', 2, 'S', 1, 'D', 5,
-                                        'G', 0, 'I', 3, 'U', 2,
-                                        'V', 4) AS "Estado Civil Int"
-       , cidade.cd_ibge AS "Municipio residencia"
-       , cidade.cd_uf AS "Estado UF"
-       , TO_CHAR(paciente.dt_cadastro, 'YYYY-MM-DD')|| ' '||TO_CHAR(paciente.hr_cadastro, 'HH24:MI:SS') AS "Data de cadastro"
-       , atendime.cd_cid AS "Cid 10 Principal Entrada"
-       , case when atendime.dt_alta is null then ''
-            when atendime.cd_cid_obito is not null then atendime.cd_cid_obito 
-            else atendime.cd_cid end AS "Cid10 Codigo saida"
-       , procedimento_sus.cd_procedimento AS "Código SIGTAP"          
-       
-       --04 CLINICA CIRURGICA
-       --03 Clínica Medica
-       , decode(procedimento_sus.cd_grupo_procedimento, '04', 2, 1)    AS "Classificacao da especialidade",cd_grupo_procedimento
+    mult.CD_CGC AS "CNPJ OSS"
+    , mult.ds_razao_social AS "Razao social OSS"
+    , 'ISG' AS "Nome fantasia"
+    , mult.nr_cnes AS "CNES"
+    , mult.ds_multi_empresa AS "Razao social da unidade"
+    , 'HDT' AS "Nome fantasia da unidade"
+    , atendime.cd_atendimento AS "Codigo da internacao"
+    , paciente.cd_paciente AS "Código da ficha do paciente"
+    , paciente.nr_cns AS "CNS paciente"
+    , TO_CHAR(paciente.dt_nascimento, 'YYYY-MM-DD') AS "Data de nascimento"
+    , DECODE(paciente.tp_sexo, 'M', 1, 'F', 2, '0') AS "Sexo"
     
-       , unid_int.ds_unid_int                   AS "Classificacao Interno"
+    -- C CASADO, S SOLTEIRO, D DESQUITADO, G IGNORADO, I DIVORCIADO, U UNIAO ESTAVEL, V VIUVO
+    , DECODE(paciente.tp_estado_civil, 
+        'G', 0,
+        'S', 1,
+        'C', 2,
+        'U', 2,
+        'I', 3,
+        'V', 4,
+        'D', 5,
+        0) AS "Estado civil"
         
-       , TO_CHAR(atendime.dt_atendimento, 'YYYY-MM-DD')  AS "Data entrada internacao"
-       , TO_CHAR(atendime.hr_atendimento, 'HH24:MM:SS')  AS "Hora entrada internacao"
-       , TO_CHAR(atendime.dt_alta, 'YYYY-MM-DD')  AS "Data saida internacao"
-       , TO_CHAR(atendime.hr_alta, 'HH24:MM:SS')  AS "Hora saida internacao"
-       
-       --O Obito
-       --T Transferencia
-       --A, D altas
-       , CASE 
-            WHEN atendime.dt_alta is null then null 
-            else
-                decode(mot_alt.tp_mot_alta, 'O', 1, 'T', 3, 'A', 2, 'D', 2) 
-            END AS "Motivo de saida"
-       
-       , unid_int.cd_unid_int    AS "Cod local internacao"
-       , unid_int.ds_unid_int    AS "Descricao local internacao"
-       , leito.cd_leito          AS "Cod interno leito"
-       , leito.ds_leito          AS "Descricao do leito"
-       
-       -- 1 POSTO 1 - REABILIT. - CLINICO, 
-       -- 3 UTI, 
-       -- 2 POSTO 2 - CIRURGICOS, 
-       -- 4 POSTO 3 - REABILITAÇÃO, 
-       -- 6 RPA(CIRURGICO),
-       -- 7 LEITO 23(UTI)
-       -- 8 LEITO 22(UTI)
-  , DECODE(unid_int.cd_unid_int, 1, 2, 
-                                    3, 3, 
-                                    2, 1, 
-                                    4, 6, 
-                                    6, 1,
-                                    7, 3,
-                                    8, 3,
-                                    6)   AS "Classificacao tipo Leito"
-    , 0                                 AS "Maca"
-    , DECODE(leito.sn_extra, 'S', 1, '0') AS "Leito extra"
+    , cidade.cd_ibge AS "Municipio residencia"
+    , cidade.cd_uf AS "UF"
+    , TO_CHAR(paciente.dt_cadastro, 'YYYY-MM-DD')|| ' ' ||TO_CHAR(paciente.hr_cadastro, 'HH24:MI:SS') AS "Data de cadastro"
+    , atendime.cd_cid AS "Cid 10 entrada"
+    , case when atendime.dt_alta is null then ''
+        when atendime.cd_cid_obito is not null then atendime.cd_cid_obito
+        else atendime.cd_cid end AS "Cid 10 saida"
+    , procedimento_sus.cd_procedimento AS "SIGTAP"
+    
+    --04 CLINICA CIRURGICA
+    --03 Clínica Medica
+    , decode(procedimento_sus.cd_grupo_procedimento, '04', 2, 1) AS "Classificacao da especialidade"
+    , cd_grupo_procedimento AS "Grupo procedimento"
+    
+    , unid_int.ds_unid_int AS "Classificacao interno"
+    
+    , TO_CHAR(atendime.dt_atendimento, 'YYYY-MM-DD') AS "Data entrada internacao"
+    , TO_CHAR(atendime.hr_atendimento, 'HH24:MM:SS') AS "Hora entrada internacao"
+    , TO_CHAR(atendime.dt_alta, 'YYYY-MM-DD') AS "Data saida internacao"
+    , TO_CHAR(atendime.hr_alta, 'HH24:MM:SS') AS "Hora saida internacao"
+    
+    --O Obito
+    --T Transferencia
+    --A, D altas
+    , case
+        when atendime.dt_alta is null then null 
+        else
+            decode(mot_alt.tp_mot_alta, 'O', 1, 'T', 3, 'A', 2, 'D', 2) 
+        END AS "Motivo de saida"
+    
+    , unid_int.cd_unid_int AS "Cod local internacao"
+    , unid_int.ds_unid_int AS "Descricao local internacao"
+    , leito.cd_leito AS "Cod interno leito"
+    , leito.ds_leito AS "Descricao do leito"
+    
+    -- 1 POSTO 1 - REABILIT. - CLINICO,
+    -- 3 UTI,
+    -- 2 POSTO 2 - CIRURGICOS,
+    -- 4 POSTO 3 - REABILITAÇÃO,
+    -- 6 RPA(CIRURGICO),
+    -- 7 LEITO 23(UTI)
+    -- 8 LEITO 22(UTI)
+    , DECODE(unid_int.cd_unid_int, 
+        1, 2,
+        3, 3,
+        2, 1,
+        4, 6,
+        6, 1,
+        7, 3,
+        8, 3,
+        6) AS "Tipo leito"
+    , 0 AS "Maca"
+    , DECODE(leito.sn_extra, 'S', 1, 0) AS "Leito extra"
 FROM 
     dbamv.multi_empresas mult
     , leito
