@@ -136,16 +136,16 @@ Obter o status do leito, informando a situação de cada um dos mesmos.
 | Código da Unidade de Saúde | String | 19 | Sim | Código de identificação da unidade de saúde (CNES). |
 | Razão Social da Unidade de Saúde | String | 100 | Sim | Descrever a razão social da unidade de saúde. |
 | Nome fantasia da Unidade de Saúde | String | 100 | Sim | Descrever o nome fantasia da unidade de saúde. |
-| Leito Status | Int | - | Sim | Informa a situação atual do leito. 1 – Disponível. 2 – Ocupado. 3 – Bloqueado. |
+| Leito Status | Inteiro | - | Sim | Informa a situação atual do leito. 1 – Disponível. 2 – Ocupado. 3 – Bloqueado. |
 | Causa Bloqueio ou Suspensão do leito | String | 255 | Sim | Informar a causa da suspensão ou bloqueio do leito. Obs.: Campo obrigatório caso a opção seja marcada como 3. |
 | Data referência | String | 19 | Sim | Data e hora da última atualização do Status do leito. Formato (YYYY-MM-DD HH:MM:SS) |
 | Hora referência | String | 8 | Sim | Hora da última atualização do Status do leitos. Formato (HH:MM:SS) |
-| Código do local de internação | Int | - | Sim | Código interno na unidade de saúde que identifica o local que encontra-se o leito. |
+| Código do local de internação | Inteiro | - | Sim | Código interno na unidade de saúde que identifica o local que encontra-se o leito. |
 | Descrição do local de internação | String | 100 | Sim | Descrição do local de internação na Unidade de saúde em que encontra-se o leito. |
-| Código interno leito | Int | - | Sim | Código interno de identificação do leito na unidade de saúde. |
+| Código interno leito | Inteiro | - | Sim | Código interno de identificação do leito na unidade de saúde. |
 | Descrição do leito | String | 100 | Sim | Descrição do leito na Unidade de saúde. |
 | Maca | Boolean | - | Sim | Identifica se o Leito em questão é uma maca |
 | Leito extra | Boolean | - | Sim | Identifica se o Leito em questão é um leito extra |
-| Classificação do tipo de Leito | Int | - | Sim | Classificação do tipo de leito de acordo com o cadastro do CNES. 1 – Cirúrgico 2 – Clínico 3 – Complementar 4 – Obstétrico 5 – Pediátrico 6 – Outras Especialidades 7 – Hospital/DIA |
+| Classificação do tipo de Leito | Inteiro | - | Sim | Classificação do tipo de leito de acordo com o cadastro do CNES. 1 – Cirúrgico 2 – Clínico 3 – Complementar 4 – Obstétrico 5 – Pediátrico 6 – Outras Especialidades 7 – Hospital/DIA |
 
 [^ voltar ao indice](#indice)
