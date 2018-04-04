@@ -125,7 +125,7 @@ bloqueados e leitos de observação
 
 ## 4 - Mapa de leitos (Status do leito)
 
-#### 4.1 Objetivo.
+#### 4.1 Objetivo
 
 Obter o status do leito, informando a situação de cada um dos mesmos.
 

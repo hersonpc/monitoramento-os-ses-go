@@ -22,35 +22,30 @@ SELECT
     , paciente.cd_paciente AS "Código da ficha do paciente"
     , paciente.nr_cns AS "CNS paciente"
     , TO_CHAR(paciente.dt_nascimento, 'YYYY-MM-DD') AS "Data de nascimento"
-    , DECODE(paciente.tp_sexo, 'M', 1, 'F', 2, '0') AS "Sexo"
+    , DECODE(paciente.tp_sexo, 'M', 1, 'F', 2, 0) AS "Sexo"
     
     -- C CASADO, S SOLTEIRO, D DESQUITADO, G IGNORADO, I DIVORCIADO, U UNIAO ESTAVEL, V VIUVO
     , DECODE(paciente.tp_estado_civil, 
-        'G', 0,
-        'S', 1,
-        'C', 2,
-        'U', 2,
-        'I', 3,
-        'V', 4,
-        'D', 5,
+        'G', 0, 'S', 1, 'C', 2, 'U', 2,
+        'I', 3, 'V', 4, 'D', 5, 
         0) AS "Estado civil"
         
     , cidade.cd_ibge AS "Municipio residencia"
     , cidade.cd_uf AS "UF"
-    , TO_CHAR(paciente.dt_cadastro, 'YYYY-MM-DD')|| ' ' ||TO_CHAR(paciente.hr_cadastro, 'HH24:MI:SS') AS "Data de cadastro"
+    , TO_CHAR(paciente.dt_cadastro, 'YYYY-MM-DD') || ' ' || TO_CHAR(coalesce(paciente.hr_cadastro, TO_DATE('00:00:00', 'HH24:MI:SS')), 'HH24:MI:SS') AS "Data de cadastro"
     , atendime.cd_cid AS "Cid 10 entrada"
     , case when atendime.dt_alta is null then ''
         when atendime.cd_cid_obito is not null then atendime.cd_cid_obito
-        else atendime.cd_cid end AS "Cid 10 saida"
+        else atendime.cd_cid 
+      end AS "Cid 10 saida"
     , procedimento_sus.cd_procedimento AS "SIGTAP"
     
     --04 CLINICA CIRURGICA
     --03 Clínica Medica
     , decode(procedimento_sus.cd_grupo_procedimento, '04', 2, 1) AS "Classificacao da especialidade"
+    
     , cd_grupo_procedimento AS "Grupo procedimento"
-    
     , unid_int.ds_unid_int AS "Classificacao interno"
-    
     , TO_CHAR(atendime.dt_atendimento, 'YYYY-MM-DD') AS "Data entrada internacao"
     , TO_CHAR(atendime.hr_atendimento, 'HH24:MM:SS') AS "Hora entrada internacao"
     , TO_CHAR(atendime.dt_alta, 'YYYY-MM-DD') AS "Data saida internacao"
@@ -86,6 +81,7 @@ SELECT
         7, 3,
         8, 3,
         6) AS "Tipo leito"
+
     , 0 AS "Maca"
     , DECODE(leito.sn_extra, 'S', 1, 0) AS "Leito extra"
 FROM 
@@ -112,5 +108,9 @@ WHERE
     AND leito.tp_situacao = 'A'
     --AND unid_int.cd_unid_int not in (5, 7, 8) 
     --AND cd_convenio = 3
-    AND atendime.dt_atendimento > ADD_MONTHS(sysdate,-36)
+    AND atendime.dt_atendimento > ADD_MONTHS(sysdate, -36)
 ORDER BY atendime.cd_atendimento DESC
+
+;/
+
+select * from procedimento_sus where cd_grupo_procedimento = '04'
