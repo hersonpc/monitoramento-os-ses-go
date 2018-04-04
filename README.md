@@ -4,11 +4,14 @@ Sistema Integrador de Monitoramento de OS's - SIMOS SES/GO
 
 ## Manual de Integração
 
-[versão 1.5](https://github.com/hersonpc/monitoramento-os-ses-go/blob/master/layouts/layout-internacao-v1.5%20.pdf)
+[versão 1.5](/layouts/v1.5/)
 
 ## Scripts de Integração
 
 
-| ID | Registro | CRER | HDT | HGG |
+| # | Registro | CRER | HDT | HGG |
 |----|----------|------|-----|-----|
-| 1  | Registro de internação | [abrir](https://github.com/hersonpc/monitoramento-os-ses-go/blob/master/AGIR/CRER/01.03_registro-de-internacao.sql) | [abrir](https://github.com/hersonpc/monitoramento-os-ses-go/blob/master/ISG/HDT/01.03_registro-de-internacao.sql) | - |
+| 1  | Registro de internação | [abrir](/AGIR/CRER/01.03_registro-de-internacao.sql) | [abrir](/ISG/HDT/01.03_registro-de-internacao.sql) | - |
+| 2 | Transferências internas | [abrir](/AGIR/CRER/02.03_transferencias-internas) | - | - |
+| 3 | Mapa de leitos (Quantitativo) | - | - | - |
+| 4 | Mapa de leitos (Status do leito) | - | - | - |
