@@ -1,6 +1,6 @@
 # Layout de Integração v1.5
 
-[Download PDF](../../raw/master/layouts/v1.5/layout-internacao-v1.5.pdf)
+[Download PDF](/../../raw/master/layouts/v1.5/layout-internacao-v1.5.pdf)
 
 ## Indice
 
