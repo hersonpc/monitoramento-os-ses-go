@@ -16,7 +16,7 @@ SELECT
     , mult.ds_razao_social AS "Razao social OSS"
     , 'ISG' AS "Nome fantasia"
     , mult.nr_cnes AS "CNES"
-    , mult.ds_multi_empresa AS "Razao social da unidade"
+    , 'HOSPITAL ESTADUAL DE DOENÇAS TROPICAIS DR. ANUAR AUAD' AS "Razao social da unidade"
     , 'HDT' AS "Nome fantasia da unidade"
     , atendime.cd_atendimento AS "Codigo da internacao"
     , paciente.cd_paciente AS "Código da ficha do paciente"
@@ -40,9 +40,10 @@ SELECT
       end AS "Cid 10 saida"
     , procedimento_sus.cd_procedimento AS "SIGTAP"
     
-    --04 CLINICA CIRURGICA
-    --03 Clínica Medica
-    , decode(procedimento_sus.cd_grupo_procedimento, '04', 2, 1) AS "Classificacao da especialidade"
+    , DECODE(unid_int.cd_unid_int, 
+        23, 3, -- ALA A - PEDIATRIA -> 3 - Clínica Pediátrica
+        2 -- Qualquer outro -> 1 - Clínica Médica
+        ) AS "Classificacao da especialidade"
     
     , cd_grupo_procedimento AS "Grupo procedimento"
     , unid_int.ds_unid_int AS "Classificacao interno"
@@ -65,22 +66,10 @@ SELECT
     , leito.cd_leito AS "Cod interno leito"
     , leito.ds_leito AS "Descricao do leito"
     
-    -- 1 POSTO 1 - REABILIT. - CLINICO,
-    -- 3 UTI,
-    -- 2 POSTO 2 - CIRURGICOS,
-    -- 4 POSTO 3 - REABILITAÇÃO,
-    -- 6 RPA(CIRURGICO),
-    -- 7 LEITO 23(UTI)
-    -- 8 LEITO 22(UTI)
     , DECODE(unid_int.cd_unid_int, 
-        1, 2,
-        3, 3,
-        2, 1,
-        4, 6,
-        6, 1,
-        7, 3,
-        8, 3,
-        6) AS "Tipo leito"
+        23, 5, -- ALA A - PEDIATRIA -> Pediátrico
+        2 -- Qualquer outro -> clínico
+        ) AS "Tipo de leito"
 
     , 0 AS "Maca"
     , DECODE(leito.sn_extra, 'S', 1, 0) AS "Leito extra"
@@ -109,8 +98,22 @@ WHERE
     --AND unid_int.cd_unid_int not in (5, 7, 8) 
     --AND cd_convenio = 3
     AND atendime.dt_atendimento > ADD_MONTHS(sysdate, -36)
-ORDER BY atendime.cd_atendimento DESC
+ORDER BY atendime.cd_atendimento
 
 ;/
 
-select * from procedimento_sus where cd_grupo_procedimento = '04'
+select * from procedimento_sus where --cd_grupo_procedimento = '04'
+cd_procedimento = '0303130040'
+
+;/
+select * from ESPECIALID
+;/
+
+select * from PROCEDIMENTO_SUS_ESPEC_LEITO where cd_procedimento = '0303010053'
+;/
+
+select * from ESPEC_SUS
+
+;/
+
+select cd_atendimento atend, cd_procedimento proc, atendime.* from atendime order by atendime.cd_atendimento desc
