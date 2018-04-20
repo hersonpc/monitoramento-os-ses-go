@@ -42,15 +42,15 @@ SELECT
     
     , DECODE(unid_int.cd_unid_int, 
         23, 3, -- ALA A - PEDIATRIA -> 3 - Clínica Pediátrica
-        2 -- Qualquer outro -> 1 - Clínica Médica
+        1 -- Qualquer outro -> 1 - Clínica Médica
         ) AS "Classificacao da especialidade"
     
     , cd_grupo_procedimento AS "Grupo procedimento"
     , unid_int.ds_unid_int AS "Classificacao interno"
     , TO_CHAR(atendime.dt_atendimento, 'YYYY-MM-DD') AS "Data entrada internacao"
-    , TO_CHAR(atendime.hr_atendimento, 'HH24:MM:SS') AS "Hora entrada internacao"
+    , TO_CHAR(atendime.hr_atendimento, 'HH24:MI:SS') AS "Hora entrada internacao"
     , TO_CHAR(atendime.dt_alta, 'YYYY-MM-DD') AS "Data saida internacao"
-    , TO_CHAR(atendime.hr_alta, 'HH24:MM:SS') AS "Hora saida internacao"
+    , TO_CHAR(atendime.hr_alta, 'HH24:MI:SS') AS "Hora saida internacao"
     
     --O Obito
     --T Transferencia
