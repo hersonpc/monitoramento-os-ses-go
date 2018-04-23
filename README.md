@@ -4,7 +4,7 @@ Sistema Integrador de Monitoramento de OS's - SIMOS SES/GO
 
 ## Manual de Integração
 
-[versão 1.5](/layouts/v1.5/)
+[versão 1.6](/layouts/v1.6/) (23 de Abril de 2018)
 
 ## Scripts de Integração
 
