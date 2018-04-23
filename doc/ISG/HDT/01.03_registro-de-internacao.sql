@@ -93,12 +93,18 @@ WHERE
     AND tipo_internacao.Cd_Tipo_Internacao = atendime.cd_tipo_internacao
     AND especialid.cd_especialid = atendime.cd_especialid
     AND mot_alt.Cd_Mot_Alt(+) = atendime.cd_mot_alt
-    AND atendime.tp_atendimento = 'I'
     AND leito.tp_situacao = 'A'
     --AND unid_int.cd_unid_int not in (5, 7, 8) 
     --AND cd_convenio = 3
+    
+    /*AND atendime.tp_atendimento = 'I'
     AND atendime.dt_atendimento > ADD_MONTHS(sysdate, -36)
+    */
+    --Padronizar atendimentos que podem entrar na consulta, para evitar divergências no processo de homologação
+    and atendime.cd_atendimento in (select distinct(cd_atendimento) from atendime a where a.tp_atendimento = 'I' and a.dt_atendimento > ADD_MONTHS(sysdate, -36))
 ORDER BY atendime.cd_atendimento
+
+;/
 
 ;/
 

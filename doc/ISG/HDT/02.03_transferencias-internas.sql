@@ -19,6 +19,8 @@ select
     , 'HOSPITAL ESTADUAL DE DOENÇAS TROPICAIS DR. ANUAR AUAD' AS "Razao social da unidade"
     , 'HDT' AS "Nome fantasia da unidade"
     , atendime.cd_atendimento AS "Codigo da Internacao"
+    --, trunc(atendime.dt_alta) as dt_alta
+    --, to_char(atendime.hr_alta, 'HH24:MI:SS') as hr_alta
     , trunc(mov_int.dt_mov_int) as dt_entrada
     , to_char(mov_int.hr_mov_int, 'HH24:MI:SS') as hr_entrada
     , case when (
@@ -77,10 +79,16 @@ where
     and leito.cd_leito = mov_int.cd_leito
     and unid_int.cd_unid_int = leito.cd_unid_int
     AND atendime.cd_procedimento = procedimento_sus.cd_procedimento(+)
-    and atendime.tp_atendimento = 'I'
     /*19 SALA DE OBSERVACAO
     20 SALA DE URGENCIA E EMERGENCIA
     26 LEITO DE MOVIMENTAÇÃO*/
-    and mov_int.cd_tip_acom not in(19, 20, 26)
+    --and mov_int.cd_tip_acom not in(19, 20, 26)
+
+    /*and atendime.tp_atendimento = 'I'
     AND atendime.dt_atendimento > ADD_MONTHS(sysdate, -36)
+    */
+    
+    --Padronizar atendimentos que podem entrar na consulta, para evitar divergências no processo de homologação
+    and atendime.cd_atendimento in (select distinct(cd_atendimento) from atendime a where a.tp_atendimento = 'I' and a.dt_atendimento > ADD_MONTHS(sysdate, -36))
+    
 order by  mov_int.cd_mov_int
