@@ -16,6 +16,8 @@ Sistema Integrador de Monitoramento de OS's - SIMOS SES/GO
 | 3 | Mapa de leitos (Status do leito) | - | [abrir](/doc/ISG/HDT/03.03_status_leitos.sql) | - |
 
 
-## Diagrama de classe
+## Modelo de implementação
+
+### Diagrama de classe
 
 ![](/doc/UML/DiagramaClasse.png) 
