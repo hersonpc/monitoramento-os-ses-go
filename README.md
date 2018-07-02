@@ -18,6 +18,10 @@ Sistema Integrador de Monitoramento de OS's - SIMOS SES/GO
 
 ## Modelo de implementação
 
+### Caso de Uso
+
+![](/doc/UML/CasoUso.png) 
+
 ### Diagrama de classe
 
 ![](/doc/UML/DiagramaClasse.png) 
