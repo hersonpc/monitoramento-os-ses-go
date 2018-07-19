@@ -31,3 +31,7 @@ As análises graficas e consolidações seram apresentadas publicamente através
 ### Diagrama de classe
 
 ![](/doc/UML/DiagramaClasse.png) 
+
+### Arquitetura
+
+![](/doc/UML/arquitetura_convergencia.png) 
