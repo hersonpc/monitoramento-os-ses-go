@@ -19,6 +19,7 @@ As análises graficas e consolidações seram apresentadas publicamente através
 | 1  | Registro de internação | [abrir](/doc/AGIR/CRER/01.03_registro-de-internacao.sql) | [abrir](/doc/ISG/HDT/01.03_registro-de-internacao.sql) | - |
 | 2 | Transferências internas | [abrir](/doc/AGIR/CRER/02.03_transferencias-internas.sql) | [abrir](/doc/ISG/HDT/02.03_transferencias-internas.sql) | - |
 | 3 | Mapa de leitos (Status do leito) | - | [abrir](/doc/ISG/HDT/03.03_status_leitos.sql) | - |
+| 4 | Atendimento Ambulatorial (Consultas eletivas) | - | [abrir](/doc/ISG/HDT/04.03_consultas_ambulatoriais.sql) | - |
 
 
 
