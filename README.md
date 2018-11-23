@@ -36,3 +36,5 @@ As análises graficas e consolidações seram apresentadas publicamente através
 ### Arquitetura
 
 ![](/doc/UML/arquitetura_convergencia.png) 
+
+![](/doc/UML/arquitetura_sesmos.png) 
